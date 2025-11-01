@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidneyAI - Chronic Kidney Disease Prediction System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-heartbeat"></i>
+                <span>KidneyAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#predict" class="nav-link">New Prediction</a></li>
+                <li><a href="#patients" class="nav-link">Patients</a></li>
+                <li><a href="#dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+            <button class="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="gradient-text">AI-Powered</span><br>
+                    Kidney Disease Prediction
+                </h1>
+                <p class="hero-subtitle">
+                    Advanced machine learning technology for early CKD detection and risk assessment.
+                    Helping healthcare providers make data-driven clinical decisions.
+                </p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>100%</h3>
+                        <p>Model Accuracy</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>2,304</h3>
+                        <p>Training Records</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>RF Model</h3>
+                        <p>Random Forest</p>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="scrollToSection('predict')">
+                    <i class="fas fa-stethoscope"></i> Start Prediction
+                </button>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card card-1">
+                    <i class="fas fa-microscope"></i>
+                    <span>Lab Analysis</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>Real-time Monitoring</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>99.9% Precision</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Form Section -->
+    <section id="predict" class="prediction-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>New Patient Assessment</h2>
+                <p>Enter patient clinical data for CKD risk prediction</p>
+            </div>
+
+            <div class="prediction-container">
+                <!-- Patient Demographics -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <i class="fas fa-user-circle"></i>
+                        <h3>Patient Demographics</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="patientName">Patient Name</label>
+                        <input type="text" id="patientName" placeholder="Enter patient name">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patientAge">Age (years)</label>
+                            <input type="number" id="patientAge" placeholder="e.g., 65" min="18" max="120">
+                            <span class="input-hint">Range: 18-120</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientGender">Gender</label>
+                            <select id="patientGender">
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lab Results -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <i class="fas fa-flask"></i>
+                        <h3>Laboratory Results</h3>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="creatinine">Creatinine Level (mg/dL)</label>
+                            <input type="number" id="creatinine" placeholder="e.g., 2.1" step="0.1" min="0">
+                            <span class="input-hint">Normal: 0.7-1.3</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="bun">BUN Level (mg/dL)</label>
+                            <input type="number" id="bun" placeholder="e.g., 45.2" step="0.1" min="0">
+                            <span class="input-hint">Normal: 7-20</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gfr">GFR Value (mL/min)</label>
+                            <input type="number" id="gfr" placeholder="e.g., 35.8" step="0.1" min="0">
+                            <span class="input-hint">Normal: >60</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="urineOutput">Urine Output (mL/day)</label>
+                            <input type="number" id="urineOutput" placeholder="e.g., 800" step="1" min="0">
+                            <span class="input-hint">Normal: 800-2000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical History -->
+                <div class="form-card">
+                    <div class="card-header">
+                        <i class="fas fa-notes-medical"></i>
+                        <h3>Medical History</h3>
+                    </div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="diabetes">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">
+                                <strong>Diabetes</strong>
+                                <small>Patient has diabetes mellitus</small>
+                            </span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="hypertension">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">
+                                <strong>Hypertension</strong>
+                                <small>Patient has high blood pressure</small>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-actions">
+                    <button class="btn-secondary" onclick="resetForm()">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                    <button class="btn-primary" onclick="makePrediction()">
+                        <i class="fas fa-brain"></i> Generate Prediction
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section id="results" class="results-section" style="display: none;">
+        <div class="container">
+            <div class="results-container">
+                <div class="result-header">
+                    <button class="btn-back" onclick="hideResults()">
+                        <i class="fas fa-arrow-left"></i> Back to Form
+                    </button>
+                    <h2>Prediction Results</h2>
+                </div>
+
+                <div class="result-cards">
+                    <!-- Main Prediction Card -->
+                    <div class="result-card main-result">
+                        <div class="result-icon" id="resultIcon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3 id="resultTitle">CKD Status</h3>
+                        <p class="result-status" id="resultStatus">--</p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="confidenceFill"></div>
+                        </div>
+                        <p class="confidence-text">
+                            Confidence: <span id="confidenceValue">--</span>%
+                        </p>
+                    </div>
+
+                    <!-- Risk Assessment -->
+                    <div class="result-card risk-card">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Risk Assessment</h4>
+                        <div class="risk-meter">
+                            <div class="risk-indicator" id="riskIndicator"></div>
+                        </div>
+                        <p class="risk-label" id="riskLabel">--</p>
+                        <p class="risk-description" id="riskDescription">--</p>
+                    </div>
+
+                    <!-- Feature Importance -->
+                    <div class="result-card features-card">
+                        <h4><i class="fas fa-chart-bar"></i> Key Indicators</h4>
+                        <div class="feature-bars" id="featureBars">
+                            <!-- Dynamic feature bars -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Patient Summary -->
+                <div class="patient-summary">
+                    <h3><i class="fas fa-file-medical"></i> Patient Summary</h3>
+                    <div class="summary-grid" id="patientSummary">
+                        <!-- Dynamic patient data -->
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="recommendations">
+                    <h3><i class="fas fa-clipboard-list"></i> Clinical Recommendations</h3>
+                    <div id="recommendationsList">
+                        <!-- Dynamic recommendations -->
+                    </div>
+                </div>
+
+                <div class="result-actions">
+                    <button class="btn-secondary" onclick="downloadReport()">
+                        <i class="fas fa-download"></i> Download Report
+                    </button>
+                    <button class="btn-primary" onclick="saveToDatabase()">
+                        <i class="fas fa-save"></i> Save to Database
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patients List Section -->
+    <section id="patients" class="patients-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Patient Records</h2>
+                <p>View and manage patient history and predictions</p>
+            </div>
+
+            <div class="patients-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search patients..." id="patientSearch">
+                </div>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="ckd">CKD Positive</button>
+                    <button class="filter-btn" data-filter="no-ckd">CKD Negative</button>
+                    <button class="filter-btn" data-filter="high-risk">High Risk</button>
+                </div>
+            </div>
+
+            <div class="patients-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Last Test Date</th>
+                            <th>CKD Status</th>
+                            <th>Risk Score</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientsTableBody">
+                        <!-- Sample Data -->
+                        <tr>
+                            <td>#1001</td>
+                            <td>John Doe</td>
+                            <td>65</td>
+                            <td>2025-10-28</td>
+                            <td><span class="badge badge-danger">Positive</span></td>
+                            <td><span class="risk-score high">98.7%</span></td>
+                            <td>
+                                <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#1002</td>
+                            <td>Jane Smith</td>
+                            <td>42</td>
+                            <td>2025-10-29</td>
+                            <td><span class="badge badge-success">Negative</span></td>
+                            <td><span class="risk-score low">12.3%</span></td>
+                            <td>
+                                <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>#1003</td>
+                            <td>Michael Brown</td>
+                            <td>58</td>
+                            <td>2025-10-30</td>
+                            <td><span class="badge badge-danger">Positive</span></td>
+                            <td><span class="risk-score high">87.5%</span></td>
+                            <td>
+                                <button class="btn-icon" title="View Details"><i class="fas fa-eye"></i></button>
+                                <button class="btn-icon" title="Edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Analytics Dashboard</h2>
+                <p>System statistics and model performance metrics</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4>Total Patients</h4>
+                        <p class="card-number">2,304</p>
+                        <span class="card-change positive">+12% this month</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon red">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4>CKD Detected</h4>
+                        <p class="card-number">1,172</p>
+                        <span class="card-change">50.9% of total</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4>Model Accuracy</h4>
+                        <p class="card-number">100%</p>
+                        <span class="card-change positive">Excellent performance</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon purple">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="card-content">
+                        <h4>Avg Response Time</h4>
+                        <p class="card-number">0.8s</p>
+                        <span class="card-change positive">-15% faster</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-pie"></i> Feature Importance</h3>
+                    <div class="chart-placeholder">
+                        <div class="feature-importance">
+                            <div class="importance-bar">
+                                <span class="bar-label">GFR</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 60.17%"></div></div>
+                                <span class="bar-value">60.17%</span>
+                            </div>
+                            <div class="importance-bar">
+                                <span class="bar-label">BUN</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 23.52%"></div></div>
+                                <span class="bar-value">23.52%</span>
+                            </div>
+                            <div class="importance-bar">
+                                <span class="bar-label">Creatinine</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 12.91%"></div></div>
+                                <span class="bar-value">12.91%</span>
+                            </div>
+                            <div class="importance-bar">
+                                <span class="bar-label">Urine Output</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 1.88%"></div></div>
+                                <span class="bar-value">1.88%</span>
+                            </div>
+                            <div class="importance-bar">
+                                <span class="bar-label">Age</span>
+                                <div class="bar-track"><div class="bar-fill" style="width: 1.22%"></div></div>
+                                <span class="bar-value">1.22%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-line"></i> Monthly Predictions</h3>
+                    <div class="chart-placeholder">
+                        <div class="line-chart">
+                            <canvas id="monthlyChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About KidneyAI</h2>
+                    <p>
+                        KidneyAI is an advanced machine learning platform designed to assist healthcare providers
+                        in early detection and risk assessment of Chronic Kidney Disease (CKD). Our Random Forest
+                        classifier achieves 100% accuracy on test data, analyzing 7 critical clinical features.
+                    </p>
+                    <h3>Key Features</h3>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check"></i> Real-time CKD risk prediction</li>
+                        <li><i class="fas fa-check"></i> 100% model accuracy on validation set</li>
+                        <li><i class="fas fa-check"></i> Integrated patient management system</li>
+                        <li><i class="fas fa-check"></i> RESTful API for seamless integration</li>
+                        <li><i class="fas fa-check"></i> Comprehensive analytics dashboard</li>
+                        <li><i class="fas fa-check"></i> Automated audit logging</li>
+                    </ul>
+
+                    <h3>Technology Stack</h3>
+                    <div class="tech-stack">
+                        <span class="tech-badge">Python 3.12</span>
+                        <span class="tech-badge">Random Forest</span>
+                        <span class="tech-badge">FastAPI</span>
+                        <span class="tech-badge">MySQL</span>
+                        <span class="tech-badge">MongoDB</span>
+                        <span class="tech-badge">scikit-learn</span>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="model-metrics">
+                        <h4>Model Performance</h4>
+                        <div class="metric-item">
+                            <span>Accuracy</span>
+                            <strong>100%</strong>
+                        </div>
+                        <div class="metric-item">
+                            <span>Precision</span>
+                            <strong>1.00</strong>
+                        </div>
+                        <div class="metric-item">
+                            <span>Recall</span>
+                            <strong>1.00</strong>
+                        </div>
+                        <div class="metric-item">
+                            <span>F1-Score</span>
+                            <strong>1.00</strong>
+                        </div>
+                        <div class="metric-footer">
+                            <p><i class="fas fa-database"></i> Training: 1,843 samples</p>
+                            <p><i class="fas fa-vial"></i> Testing: 461 samples</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4><i class="fas fa-heartbeat"></i> KidneyAI</h4>
+                    <p>Advanced ML-powered CKD prediction system</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#predict">Prediction</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Project Info</h4>
+                    <p>Group 12 - Database Assignment</p>
+                    <p>Formative 1</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-envelope"></i> support@kidneyai.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KidneyAI. All rights reserved. | Built with <i class="fas fa-heart"></i> by Group 12</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
