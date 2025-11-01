@@ -1,3 +1,4 @@
+import os
 import certifi
 import motor.motor_asyncio
 from fastapi import FastAPI, HTTPException, Body, status
@@ -221,3 +222,14 @@ async def delete_patient(id: str):
         return
     
     raise HTTPException(status_code=404, detail=f"Patient with ID {id} not found")
+
+MONGO_DETAILS = os.getenv(
+    "MONGO_URI",
+    "mongodb+srv://hospital_db_user:hospital123@cluster0.8ef3cwc.mongodb.net/?appName=Cluster0"
+)
+client = motor.motor_asyncio.AsyncIOMotorClient(
+    MONGO_DETAILS,
+    tlsCAFile=certifi.where()
+)
+database = client.hospital_db
+patient_collection = database.get_collection("patients")
