@@ -2,6 +2,43 @@
 .env
 *.env
 !.env.example
+.env.local
+.env.production
+.env.development
+
+# Database credentials and connection strings
+config.py
+config/
+secrets/
+credentials/
+*.config
+database.ini
+db_config.py
+connection.py
+
+# API keys and tokens
+api_keys.txt
+secrets.txt
+tokens.txt
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+
+# Cloud service credentials
+*credentials.json
+*service-account*.json
+gcp-key.json
+aws-credentials
+azure-credentials
+
+# Database files (local development)
+*.db
+*.sqlite
+*.sqlite3
+data/
+backups/
 
 # Python cache
 __pycache__/
@@ -27,27 +64,58 @@ wheels/
 .installed.cfg
 *.egg
 
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
 # PyCharm
 .idea/
 
 # VS Code
 .vscode/
+*.code-workspace
 
 # Claude Code local settings
 .claude/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Model files (if sensitive or large)
+models/checkpoint*
+*.model
+*.pkl
+large_models/
+
+# Logs and temporary files
+*.log
+logs/
+temp/
+tmp/
+*.tmp
 
 # macOS
 .DS_Store
+.AppleDouble
+.LSOverride
 
 # Windows
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 *.bat
 
-# Temporary files
-*.tmp
-*.log
-temp/
-tmp/
+# Testing and coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Docker
+.dockerignore
+Dockerfile.local
+docker-compose.override.yml

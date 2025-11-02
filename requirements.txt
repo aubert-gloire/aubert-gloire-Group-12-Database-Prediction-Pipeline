@@ -26,3 +26,4 @@ requests==2.31.0
 # Additional utilities
 python-dateutil==2.8.2
 pydantic==2.5.0
+python-dotenv==1.0.0
