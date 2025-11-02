@@ -37,14 +37,27 @@ The goal is to provide accurate kidney disease risk predictions to aid early int
    # - MONGODB_DATABASE (database name, default: hospital_db)
    ```
 
-3. **Run the Application**
+3. **Set Up Database Schema and Sample Data**
+
+   ```bash
+   # Create the database schema (run SQL script in your MySQL server)
+   mysql -u username -p < database_schema.sql
+   
+   # Populate with sample data (automated script)
+   python populate_database.py
+   
+   # Or use the comprehensive setup script
+   python setup_database.py
+   ```
+
+4. **Run the Application**
 
    ```bash
    # Start the API server
    python kidney_disease_api.py
    ```
 
-4. **Alternative Usage Options**
+5. **Alternative Usage Options**
 
    **Option A: Use the Web Interface**
    ```bash
@@ -123,13 +136,60 @@ The goal is to provide accurate kidney disease risk predictions to aid early int
 ```text
 ├── kidney_disease_api.py          # Main API application
 ├── predict_latest_patient.py      # Standalone prediction script
+├── populate_database.py           # Database population script (NEW)
+├── setup_database.py              # Automated setup script (NEW)
+├── setup_database.bat             # Windows setup batch file (NEW)
 ├── models/                        # Pre-trained ML model files
 ├── frontend/                      # Web interface files
 ├── .env.example                   # Environment variables template
 ├── database_schema.sql            # MySQL database schema
-├── sample_data.sql               # Sample data for testing
+├── sample_data.sql               # Sample data for testing (SQL format)
 └── requirements.txt              # Python dependencies
 ```
+
+## Database Population
+
+### Automated Population Script
+
+The project includes a comprehensive Python script to populate both MySQL and MongoDB databases with realistic sample data:
+
+**Key Features:**
+- 🎯 **Diverse Risk Profiles**: Generates patients with varied CKD risk levels (Low, Moderate, High, Critical)
+- 🏥 **Realistic Medical Data**: Includes proper lab values, medical histories, and demographic information
+- 💾 **Dual Database Support**: Populates both MySQL (relational) and MongoDB (NoSQL) simultaneously
+- 📊 **Comprehensive Coverage**: Creates 10 patients with complete medical profiles
+- 🔄 **Automatic Cleanup**: Safely clears existing data before population
+
+**Usage Options:**
+
+1. **Automated Setup (Recommended):**
+   ```bash
+   # Complete setup including dependencies and population
+   python setup_database.py
+   
+   # Windows users can also use:
+   setup_database.bat
+   ```
+
+2. **Manual Population Only:**
+   ```bash
+   # If schema already exists, just populate data
+   python populate_database.py
+   ```
+
+3. **SQL Script (Alternative):**
+   ```bash
+   # Traditional SQL approach
+   mysql -u username -p < sample_data.sql
+   ```
+
+**Sample Data Includes:**
+- **High Risk Patients**: Advanced CKD cases with low GFR, high creatinine
+- **Moderate Risk Patients**: Stage 3 CKD with controlled comorbidities  
+- **Low Risk Patients**: Normal kidney function, young and healthy profiles
+- **Complete Lab Results**: Creatinine, BUN, GFR, Urine Output values
+- **Medical History**: Diabetes and hypertension status
+- **Prediction Logs**: Historical ML predictions for testing
 
 ## Features and Deliverables
 
