@@ -495,12 +495,12 @@ function filterPatientsBySearch(searchTerm) {
   });
 }
 
-// API Integration Functions (To be implemented when backend is ready)
+// API Integration Functions - Updated with correct endpoints
 
 // Fetch latest patient data from API
 async function fetchLatestPatient() {
   try {
-    const response = await fetch("/api/patients/latest");
+    const response = await fetch(`${API_BASE_URL}/mysql/patients/latest`);
     const data = await response.json();
     return data;
   } catch (error) {
