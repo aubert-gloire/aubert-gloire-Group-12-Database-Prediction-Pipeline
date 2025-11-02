@@ -56,6 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
       filterPatientsBySearch(searchTerm);
     });
   }
+  // Load real patient data for dashboard
+  loadPatientDashboard();
 });
 
 // Scroll to section helper
