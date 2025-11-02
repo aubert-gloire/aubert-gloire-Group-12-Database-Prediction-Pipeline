@@ -193,6 +193,9 @@ async function simulatePrediction(data) {
 
 // Display Results
 function displayResults(prediction, patientData) {
+  // Store data globally for saving to database
+  window.lastPredictionResult = prediction;
+  window.lastPatientData = patientData;
   // Show results section
   document.getElementById("results").style.display = "block";
 
